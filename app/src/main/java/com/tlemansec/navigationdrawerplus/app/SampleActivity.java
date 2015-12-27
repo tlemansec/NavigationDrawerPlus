@@ -6,7 +6,7 @@ import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 
-import com.tlemansec.navigationdrawerplus.R;
+import com.tlemansec.navigationdrawerplus.app.R;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -20,9 +20,14 @@ public class SampleActivity extends Activity {
 
     //region Attributes
 
-    @Bind(R.id.drawer_layout) DrawerPlus mDrawerPlus;
-    @Bind(R.id.view_content_container) LinearLayout mContentContainer;
-    @Bind(R.id.view_left_menu_container) FrameLayout mLeftMenuContainer;
+    @Bind(R.id.drawer_layout)
+    DrawerPlus mDrawerPlus;
+
+    @Bind(R.id.view_content_container)
+    LinearLayout mContentContainer;
+
+    @Bind(R.id.view_left_menu_container)
+    FrameLayout mLeftMenuContainer;
 
     private final String TAG = SampleActivity.class.getSimpleName();
 
@@ -40,7 +45,7 @@ public class SampleActivity extends Activity {
     }
 
     @OnClick(R.id.open_left_menu_button)
-    public void submit(View view) {
+    public void clickOnButton (View view) {
         //Do your job.
     }
 

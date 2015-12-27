@@ -9,7 +9,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.animation.TranslateAnimation;
 
-import com.tlemansec.navigationdrawerplus.R;
+import com.tlemansec.navigationdrawerplus.app.R;
 
 
 /**
@@ -154,7 +154,7 @@ public class DrawerPlus extends DrawerLayout {
         }
 
         if(mDrawerPlusListener != null) {
-            String drawerId = drawerView != null ? String.valueOf(drawerView.getId()) : "";
+            String drawerId = String.valueOf(drawerView.getId());
             Log.d(TAG, "onDrawerSliding " + drawerId);
             mDrawerPlusListener.onDrawerSliding(drawerView, moveFactor, mLastMenuPosition);
         }
