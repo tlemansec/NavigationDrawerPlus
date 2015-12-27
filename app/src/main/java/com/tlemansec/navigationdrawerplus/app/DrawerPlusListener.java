@@ -1,4 +1,4 @@
-package com.tlemansec.navigationdrawerplus;
+package com.tlemansec.navigationdrawerplus.app;
 
 import android.view.View;
 

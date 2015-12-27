@@ -1,10 +1,12 @@
-package com.tlemansec.navigationdrawerplus;
+package com.tlemansec.navigationdrawerplus.app;
 
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
+
+import com.tlemansec.navigationdrawerplus.R;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
