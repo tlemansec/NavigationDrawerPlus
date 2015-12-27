@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="drawerPlus">
+        <attr name="layout_overlayColor" format="color" />
+        <attr name="layout_slideOverContentView" format="boolean" />
+        <attr name="layout_contentView" format="reference" />
+        <attr name="layout_leftMenuView" format="reference" />
+        <attr name="layout_leftMenuChildView" format="reference" />
+        <attr name="layout_rightMenuView" format="reference" />
+        <attr name="layout_rightMenuChildView" format="reference" />
+    </declare-styleable>
+</resources>

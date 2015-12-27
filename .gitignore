@@ -11,6 +11,9 @@
 # Generated files
 bin/
 gen/
+/.idea
+/.DS_Store
+*.iml
 
 # Gradle files
 .gradle/
@@ -25,3 +28,4 @@ proguard/
 
 # Log Files
 *.log
+
