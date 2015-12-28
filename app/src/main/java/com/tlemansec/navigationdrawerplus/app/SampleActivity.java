@@ -45,10 +45,5 @@ public class SampleActivity extends Activity {
         ButterKnife.bind(this);
     }
 
-    @OnClick(R.id.open_left_menu_button)
-    public void clickOnButton (View view) {
-        //Do your job.
-    }
-
     //endregion
 }
