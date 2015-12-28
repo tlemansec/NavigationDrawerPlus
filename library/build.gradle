@@ -10,7 +10,7 @@ android {
         targetSdkVersion 23
         versionCode 1
         versionName "1.0"
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        //testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
 
     buildTypes {
@@ -31,6 +31,7 @@ dependencies {
     androidTestCompile('com.google.truth:truth:0.27') {
         exclude group: 'junit' // Android has JUnit built in
     }
+    compile 'com.android.support:appcompat-v7:23.1.1'
 }
 
 task wrapper(type: Wrapper) {

@@ -33,7 +33,7 @@ public class DrawerPlus extends DrawerLayout {
     private int mLeftMenuChildViewContainerId;
     private int mRightMenuChildViewContainerId;
 
-    private final String TAG = DrawerPlus.class.getSimpleName();
+    private static final String TAG = DrawerPlus.class.getSimpleName();
 
     //endregion
 
@@ -69,14 +69,16 @@ public class DrawerPlus extends DrawerLayout {
         mDrawerLeftMenuViewContainer.post(new Runnable() {
             @Override
             public void run() {
-                mDrawerLeftMenuChildViewContainer.setTop(mDrawerLeftMenuViewContainer.getMeasuredHeight());
+                mDrawerLeftMenuChildViewContainer.setTop(
+                        mDrawerLeftMenuViewContainer.getMeasuredHeight());
             }
         });
 
         mDrawerRightMenuViewContainer.post(new Runnable() {
             @Override
             public void run() {
-                mDrawerRightMenuChildViewContainer.setTop(mDrawerRightMenuViewContainer.getMeasuredHeight());
+                mDrawerRightMenuChildViewContainer.setTop(
+                        mDrawerRightMenuViewContainer.getMeasuredHeight());
             }
         });
     }
@@ -87,28 +89,38 @@ public class DrawerPlus extends DrawerLayout {
     //region Utils
 
     private void initializeViewWithAttributes(Context context, AttributeSet attrs) {
-        if(attrs == null || context == null)
+        if (attrs == null || context == null) {
             return;
+        }
 
         final TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.drawerPlus);
-        mContentViewContainerId = typedArray.getResourceId(R.styleable.drawerPlus_layout_contentView, -1);
-        mLeftMenuViewContainerId = typedArray.getResourceId(R.styleable.drawerPlus_layout_leftMenuView, -1);
-        mRightMenuViewContainerId = typedArray.getResourceId(R.styleable.drawerPlus_layout_rightMenuView, -1);
-        mLeftMenuChildViewContainerId = typedArray.getResourceId(R.styleable.drawerPlus_layout_leftMenuChildView, -1);
-        mRightMenuChildViewContainerId = typedArray.getResourceId(R.styleable.drawerPlus_layout_rightMenuChildView, -1);
+        mContentViewContainerId = typedArray.getResourceId(
+                R.styleable.drawerPlus_layout_contentView, -1);
+        mLeftMenuViewContainerId = typedArray.getResourceId(
+                R.styleable.drawerPlus_layout_leftMenuView, -1);
+        mRightMenuViewContainerId = typedArray.getResourceId(
+                R.styleable.drawerPlus_layout_rightMenuView, -1);
+        mLeftMenuChildViewContainerId = typedArray.getResourceId(
+                R.styleable.drawerPlus_layout_leftMenuChildView, -1);
+        mRightMenuChildViewContainerId = typedArray.getResourceId(
+                R.styleable.drawerPlus_layout_rightMenuChildView, -1);
 
-        if (mContentViewContainerId == -1 || (mLeftMenuViewContainerId == -1 && mRightMenuViewContainerId == -1))
+        if (mContentViewContainerId == -1
+                || (mLeftMenuViewContainerId == -1 && mRightMenuViewContainerId == -1)) {
             throw new IllegalArgumentException("ContentView and all Menu Views cannot be null!");
+        }
 
-        if (isInEditMode())
+        if (isInEditMode()) {
             return;
+        }
 
-        mSlideOverContentView = typedArray.getBoolean(R.styleable.drawerPlus_layout_slideOverContentView,
-                true);
+        mSlideOverContentView = typedArray.getBoolean(
+                R.styleable.drawerPlus_layout_slideOverContentView, true);
 
         int overlayColor = typedArray.getColor(R.styleable.drawerPlus_layout_overlayColor, -1);
-        if(overlayColor != -1)
+        if (overlayColor != -1) {
             setScrimColor(overlayColor);
+        }
 
         setDrawerListener(new SimpleDrawerPlusListener());
 
@@ -123,46 +135,50 @@ public class DrawerPlus extends DrawerLayout {
      * @param slideOffset The new offset of this drawer within its range, from 0-1.
      */
     private void handleOnDrawerSlide(View drawerView, float slideOffset) {
-        if(drawerView == null || mDrawerContentViewContainer == null) {
+        if (drawerView == null || mDrawerContentViewContainer == null) {
             Log.e(TAG, "handleOnDrawerSlide missing parameters");
             return;
         }
 
         boolean isLeftDrawer = drawerView.getId() == mLeftMenuViewContainerId ? true : false;
 
-        float moveFactor = drawerView.getWidth() * slideOffset;
+        float mvFct = drawerView.getWidth() * slideOffset;
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
-            if(!mSlideOverContentView) {
+            if (!mSlideOverContentView) {
                 //Push the main page to the right or left with the drawer layout menu.
-                mDrawerContentViewContainer.setTranslationX(isLeftDrawer ? moveFactor : -moveFactor);
+                mDrawerContentViewContainer.setTranslationX(isLeftDrawer ? mvFct : -mvFct);
             }
 
         } else {
-            TranslateAnimation anim = new TranslateAnimation(mLastMenuPosition, moveFactor, 0.0f, 0.0f);
+            TranslateAnimation anim = new TranslateAnimation(mLastMenuPosition, mvFct,
+                    0.0f, 0.0f);
             anim.setDuration(0);
             anim.setFillAfter(true);
 
-            if(!mSlideOverContentView) {
+            if (!mSlideOverContentView) {
                 //Push the main page to the right or left with the drawer layout menu.
                 mDrawerContentViewContainer.startAnimation(anim);
             }
 
-            mLastMenuPosition = isLeftDrawer ? moveFactor : -moveFactor;
+            mLastMenuPosition = isLeftDrawer ? mvFct : -mvFct;
         }
 
-        if(mDrawerPlusListener != null) {
+        if (mDrawerPlusListener != null) {
             String drawerId = String.valueOf(drawerView.getId());
             Log.d(TAG, "onDrawerSliding " + drawerId);
-            mDrawerPlusListener.onDrawerSliding(drawerView, moveFactor, mLastMenuPosition);
+            mDrawerPlusListener.onDrawerSliding(drawerView, mvFct, mLastMenuPosition);
         }
 
-        //(isLeftDrawer ? mDrawerLeftMenuChildViewContainer : mDrawerRightMenuChildViewContainer).setAlpha(slideOffset);
+        //(isLeftDrawer ? mDrawerLeftMenuChildViewContainer :
+        // mDrawerRightMenuChildViewContainer).setAlpha(slideOffset);
 
-        if(isLeftDrawer) {
-            mDrawerLeftMenuChildViewContainer.setTop((int)(-slideOffset * mDrawerLeftMenuViewContainer.getHeight()));
+        if (isLeftDrawer) {
+            mDrawerLeftMenuChildViewContainer.setTop(
+                    (int) (-slideOffset * mDrawerLeftMenuViewContainer.getHeight()));
         } else {
-            mDrawerRightMenuChildViewContainer.setTop((int)(-slideOffset * mDrawerRightMenuViewContainer.getHeight()));
+            mDrawerRightMenuChildViewContainer.setTop(
+                    (int) (-slideOffset * mDrawerRightMenuViewContainer.getHeight()));
         }
     }
 
@@ -187,7 +203,8 @@ public class DrawerPlus extends DrawerLayout {
     //region Getters Setters
 
     /**
-     * Define a reference using a DrawerPlusListener, to follow the opening and closing state of the menu.
+     * Define a reference using a DrawerPlusListener,
+     * to follow the opening and closing state of the menu.
      *
      * @param drawerPlusListener a reference to a DrawerPlusListener.
      */
@@ -219,8 +236,8 @@ public class DrawerPlus extends DrawerLayout {
          */
         @Override
         public void onDrawerOpened(View drawerView) {
-            if(drawerView != null) {
-                if(drawerView.getId() == mLeftMenuViewContainerId) {
+            if (drawerView != null) {
+                if (drawerView.getId() == mLeftMenuViewContainerId) {
                     setDrawerLockMode(LOCK_MODE_LOCKED_CLOSED, mDrawerRightMenuViewContainer);
 
                 } else {
@@ -228,7 +245,7 @@ public class DrawerPlus extends DrawerLayout {
                 }
             }
 
-            if(mDrawerPlusListener != null) {
+            if (mDrawerPlusListener != null) {
                 String drawerId = drawerView != null ? String.valueOf(drawerView.getId()) : "";
                 Log.d(TAG, "onDrawerOpened " + drawerId);
                 mDrawerPlusListener.onDrawerOpened(drawerView);
@@ -242,8 +259,8 @@ public class DrawerPlus extends DrawerLayout {
          */
         @Override
         public void onDrawerClosed(View drawerView) {
-            if(drawerView != null) {
-                if(drawerView.getId() == mLeftMenuViewContainerId) {
+            if (drawerView != null) {
+                if (drawerView.getId() == mLeftMenuViewContainerId) {
                     setDrawerLockMode(LOCK_MODE_UNLOCKED, mDrawerRightMenuViewContainer);
 
                 } else {
