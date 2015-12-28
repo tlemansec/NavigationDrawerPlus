@@ -12,3 +12,7 @@ install:
 
 script:
   - ./gradlew clean build check
+
+notifications:
+  email:
+    - thibault.le.mansec@gmail.com
